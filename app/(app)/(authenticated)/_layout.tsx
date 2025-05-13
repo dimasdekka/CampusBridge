@@ -21,7 +21,7 @@ const Layout = () => {
       <Stack.Screen
         name="(modal)/create-chat"
         options={{
-          presentation: 'modal', // Ensures this screen is displayed as a modal
+          presentation: 'modal',
           title: 'Create Chat',
           headerLeft: () => (
             <TouchableOpacity onPress={() => router.back()}>
@@ -31,14 +31,14 @@ const Layout = () => {
         }}
       />
       <Stack.Screen
-        name="/chat/[id]/index"
+        name="chat/[id]/index"
         options={{
           title: '',
           headerBackTitle: 'Chats',
         }}
       />
       <Stack.Screen
-        name="/chat/[id]/manage"
+        name="chat/[id]/manage"
         options={{
           title: 'Manage Chat',
         }}
