@@ -12,6 +12,7 @@ const Layout = () => {
         tabBarActiveTintColor: '#0d6c9a',
         tabBarInactiveTintColor: '#8E8E93',
         headerShown: true,
+        headerTitleAlign: 'center',
         tabBarButton: HapticTab,
         tabBarBackground:
           process.env.EXPO_OS === 'ios' ? BlurTabBarBackground : undefined,
