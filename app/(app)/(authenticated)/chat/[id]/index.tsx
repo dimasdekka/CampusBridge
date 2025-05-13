@@ -2,7 +2,7 @@ import { Text, View } from 'react-native';
 const Page = () => {
   return (
     <View>
-      <Text>Page</Text>
+      <Text>Chats ID</Text>
     </View>
   );
 };

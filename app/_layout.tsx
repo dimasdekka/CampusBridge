@@ -11,7 +11,7 @@ import { ActivityIndicator, useColorScheme, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const InitialLayout = () => {
-  const { initialized, signOut } = useAuth();
+  const { initialized } = useAuth();
 
   if (!initialized) {
     return (

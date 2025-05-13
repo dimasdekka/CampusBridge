@@ -6,7 +6,7 @@ const PublicLayout = () => {
   const { authState } = useAuth();
 
   if (authState?.authenticated) {
-    return <Redirect href="/(app)/(authenticated)" />;
+    return <Redirect href="/(app)/(authenticated)/(tabs)" />;
   }
 
   return (
