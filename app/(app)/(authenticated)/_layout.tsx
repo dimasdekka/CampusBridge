@@ -6,12 +6,12 @@ import { TouchableOpacity } from 'react-native';
 
 const Layout = () => {
   const { authState } = useAuth();
+  const { signOut } = useAuth();
   const router = useRouter();
 
   if (!authState.authenticated) {
     return <Redirect href="/login" />;
   }
-
   return (
     <ChatProvider>
       <Stack screenOptions={{ headerTitleAlign: 'center' }}>
