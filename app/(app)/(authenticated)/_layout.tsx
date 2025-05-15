@@ -6,7 +6,6 @@ import { TouchableOpacity } from 'react-native';
 
 const Layout = () => {
   const { authState } = useAuth();
-  const { signOut } = useAuth();
   const router = useRouter();
 
   if (!authState.authenticated) {
