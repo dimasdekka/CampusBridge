@@ -1,3 +1,4 @@
+npm install expo
 
 npx expo install nativewind tailwindcss@3.x
 
@@ -32,4 +33,7 @@ npx expo install react-native-svg
 npx expo install @react-native-community/netinfo
 
 npx expo install @notifee/react-native
+
+npx expo install expo-clipboard expo-av
+
 
