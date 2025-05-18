@@ -16,7 +16,7 @@ interface AuthProps {
     role: string | null;
     email: string | null;
   };
-  onRegister: (email: string, password: string) => Promise<any>;
+  onRegister: (nim: string, email: string, password: string) => Promise<any>;
   signIn: (email: string, password: string) => Promise<any>;
   signOut: () => Promise<any>;
   initialized: boolean;
@@ -130,13 +130,13 @@ export const AuthProvider = ({ children }: any) => {
   };
 
   // Fungsi buat registrasi user baru
-  const register = async (email: string, password: string) => {
+  const register = async (nim: string, email: string, password: string) => {
     const result = await fetch(`${API_URL}/auth/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ nim, email, password }),
     });
 
     const json = await result.json();
@@ -145,6 +145,7 @@ export const AuthProvider = ({ children }: any) => {
       throw new Error(json.msg);
     }
 
+    // Pastikan updateAuthStateFromToken menerima json yang ada jwt-nya!
     updateAuthStateFromToken(json);
     await storage.setItem(TOKEN_KEY, JSON.stringify(json));
     return json;

@@ -17,6 +17,7 @@ import * as z from 'zod';
 
 const schema = z
   .object({
+    nim: z.string().min(8, 'NIM must be at least 8 characters'),
     email: z.string().email('Invalid email address'),
     password: z
       .string()
@@ -45,8 +46,10 @@ const Page = () => {
   });
 
   const onSignUpPress = async (data: RegisterFormData) => {
+    setLoading(true);
     try {
-      const result = await onRegister(data.email, data.password);
+      // Kirim nim, email, password sesuai urutan di AuthProvider!
+      const result = await onRegister(data.nim, data.email, data.password);
       console.log('Registration successful', result);
     } catch (e) {
       Alert.alert('Error', 'Could not create account');
@@ -69,6 +72,25 @@ const Page = () => {
         </Text>
 
         <View className="gap-2">
+          <Controller
+            control={control}
+            name="nim"
+            render={({ field: { onChange, value } }) => (
+              <View>
+                <TextInput
+                  autoCapitalize="none"
+                  placeholder="Nim"
+                  value={value}
+                  onChangeText={onChange}
+                  className="bg-gray-100 border border-gray-300 rounded-xl p-4 text-gray-900 dark:bg-gray-800 dark:text-white"
+                />
+                {errors.nim && (
+                  <Text className="text-red-500">{errors.nim.message}</Text>
+                )}
+              </View>
+            )}
+          />
+
           <Controller
             control={control}
             name="email"
