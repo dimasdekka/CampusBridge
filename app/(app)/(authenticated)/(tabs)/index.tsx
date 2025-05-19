@@ -1,12 +1,13 @@
 import {
   View,
   Text,
-  Pressable,
   TouchableOpacity,
   FlatList,
+  ScrollView,
+  Image,
 } from 'react-native';
-import { MaterialIcons, FontAwesome5, Ionicons } from '@expo/vector-icons';
-import { Link, useFocusEffect } from 'expo-router';
+import { MaterialIcons, Ionicons } from '@expo/vector-icons';
+import { Link, useFocusEffect, useRouter } from 'expo-router';
 import { useState, useCallback } from 'react';
 import {
   useSupervisions,
@@ -15,6 +16,73 @@ import {
 import { Supervision } from '@/providers/SupervisionProvider';
 import { useAuth } from '@/providers/AuthProvider';
 import React from 'react';
+import { useChatContext } from 'stream-chat-expo';
+
+const StudentAvatars = () => {
+  const { client } = useChatContext();
+  const [students, setStudents] = React.useState<any[]>([]);
+  const router = useRouter();
+
+  React.useEffect(() => {
+    const loadStudents = async () => {
+      const res = await client.queryUsers({ role: 'student' });
+      if (!client.user) return;
+      setStudents(res.users.filter((u: any) => u.id !== client.user!.id));
+    };
+    loadStudents();
+  }, []);
+
+  return (
+    <ScrollView
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      style={{ flexDirection: 'row', gap: 16 }}
+    >
+      {students.map((student) => (
+        <TouchableOpacity
+          key={student.id}
+          style={{ alignItems: 'center', marginRight: 16 }}
+          onPress={async () => {
+            if (!client.user) return;
+            const channelId = [client.user.id, student.id].sort().join('-');
+            const channel = client.channel('messaging', channelId, {
+              members: [client.user.id, student.id],
+            });
+            await channel.create();
+            router.push(`/chat/${channel.id}`);
+          }}
+        >
+          <Image
+            source={{
+              uri:
+                student.image ||
+                'https://ui-avatars.com/api/?name=' +
+                  encodeURIComponent(student.name || student.id),
+            }}
+            style={{
+              width: 56,
+              height: 56,
+              borderRadius: 28,
+              backgroundColor: '#e5e7eb',
+            }}
+          />
+          <Text
+            style={{
+              fontSize: 12,
+              marginTop: 4,
+              maxWidth: 60,
+              textAlign: 'center',
+            }}
+            numberOfLines={2}
+            ellipsizeMode="tail"
+          >
+            {student.name || student.id}
+          </Text>
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
+  );
+};
 
 const Page = () => {
   const { getSupervisions, updateSupervision } = useSupervisions();
@@ -31,10 +99,6 @@ const Page = () => {
   const loadSupervisions = async () => {
     const data = await getSupervisions();
     setSupervisions(data);
-  };
-
-  const callProfessor = () => {
-    console.log('call professor');
   };
 
   const confirmSession = async (id: string) => {
@@ -58,6 +122,7 @@ const Page = () => {
       )
     );
   };
+
   return (
     <View className="flex-1 bg-gray-50 px-4 pt-4">
       {!isProfessor && (
@@ -135,20 +200,18 @@ const Page = () => {
             </View>
           )}
           ListFooterComponent={() => (
-            <View className="bg-orange-50 rounded-2xl p-4 mb-6 mt-4">
-              <View className="flex-row items-center mb-3">
-                <FontAwesome5 name="phone-alt" size={20} color="#f97316" />
-                <Text className="text-lg font-bold ml-2 text-orange-500">
-                  Call Your Professor
-                </Text>
-              </View>
-              <Text className="text-gray-700">
-                Need immediate support? Your professor is just a call away
-                during business hours.
+            <View style={{ marginTop: 16, marginBottom: 24 }}>
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: 'bold',
+                  marginBottom: 8,
+                  color: '#374151',
+                }}
+              >
+                Chat with Other Students
               </Text>
-              <Pressable className="bg-orange-500 rounded-lg py-2 px-4 mt-3 self-start">
-                <Text className="text-white font-semibold">Call Now</Text>
-              </Pressable>
+              <StudentAvatars />
             </View>
           )}
           contentContainerClassName=""

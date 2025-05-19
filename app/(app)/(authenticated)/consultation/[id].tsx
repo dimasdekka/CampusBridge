@@ -6,7 +6,7 @@ import {
   CallContent,
 } from '@stream-io/video-react-native-sdk';
 import { useEffect, useState } from 'react';
-import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router';
+import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { View, Text } from 'react-native';
 import { CustomCallControls } from '@/components/CustomCallControls';
 import { useAuth } from '@/providers/AuthProvider';
@@ -29,16 +29,32 @@ const Page = () => {
   }, []);
 
   useEffect(() => {
-    const _call = client?.call('default', id as string);
-    _call?.join({ create: true });
+    const setupCall = async () => {
+      const _call = client?.call('default', id as string);
+      if (!_call) return;
 
-    if (_call) {
+      await _call.join({ create: true });
       setCall(_call);
+
+      // Hanya profesor yang mulai recording dan transcription
       if (isProfessor) {
-        _call.startRecording();
-        _call.startTranscription();
+        const unsubscribe = _call.on('call.updated', async () => {
+          if (_call.state.callingState === CallingState.JOINED) {
+            try {
+              await _call.startRecording();
+              await _call.startTranscription();
+              console.log('Recording & transcription started');
+            } catch (err) {
+              console.warn('Failed to start recording or transcription', err);
+            }
+          }
+        });
+
+        return () => unsubscribe?.();
       }
-    }
+    };
+
+    setupCall();
   }, [client, id]);
 
   useEffect(() => {
@@ -65,8 +81,10 @@ const Page = () => {
         <CallContent
           layout="spotlight"
           onHangupCallHandler={() => {
-            call?.stopRecording();
-            call?.stopTranscription();
+            if (isProfessor) {
+              call?.stopRecording();
+              call?.stopTranscription();
+            }
             call?.leave();
           }}
           CallControls={CustomCallControls}
@@ -75,4 +93,5 @@ const Page = () => {
     </StreamCall>
   );
 };
+
 export default Page;
