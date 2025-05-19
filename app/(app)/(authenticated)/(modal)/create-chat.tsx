@@ -18,7 +18,7 @@ const Page = () => {
 
   useEffect(() => {
     const loadUsers = async () => {
-      const users = await client.queryUsers({ role: 'user' });
+      const users = await client.queryUsers({ role: 'student' });
       setUsers(users.users);
     };
     loadUsers();

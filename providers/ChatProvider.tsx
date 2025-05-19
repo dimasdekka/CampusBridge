@@ -30,6 +30,10 @@ export default function ChatProvider({ children }: PropsWithChildren) {
   // Ambil state autentikasi dari AuthProvider
   const { authState } = useAuth();
 
+  useEffect(() => {
+    console.log('Auth state:', authState);
+  }, [authState]);
+
   // Koneksi ke Stream Chat saat user sudah terautentikasi
   useEffect(() => {
     // Kalau user belum login, skip aja
@@ -43,6 +47,7 @@ export default function ChatProvider({ children }: PropsWithChildren) {
         {
           id: authState.user_id!,
           name: authState.email!,
+          role: authState.role!,
         },
         authState.token!
       );

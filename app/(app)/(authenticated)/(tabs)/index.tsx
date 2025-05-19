@@ -207,7 +207,8 @@ const Page = () => {
                     {new Date(item.dateTime).toLocaleString()}
                   </Text>
                   <Text className="text-gray-700 mt-1">
-                    Student: {item.studentEmail || item.studentId}
+                    Student:{' '}
+                    {item.studentName || item.studentEmail || item.studentId}
                   </Text>
                 </View>
                 {item.status === SupervisionStatus.Pending && (

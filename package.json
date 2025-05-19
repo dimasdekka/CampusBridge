@@ -9,7 +9,13 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "android:build": "npx expo run:android --no-install",
+    "android:install-1": "adb -s emulator-5554 install -r android/app/build/outputs/apk/debug/app-debug.apk",
+    "android:install-2": "adb -s emulator-5556 install -r android/app/build/outputs/apk/debug/app-debug.apk",
+    "android:launch-1": "adb -s emulator-5554 shell am start -n com.nama.package/.MainActivity",
+    "android:launch-2": "adb -s emulator-5556 shell am start -n com.nama.package/.MainActivity",
+    "android:dual": "npm run android:build && npm run android:install-1 && npm run android:install-2 && npm run android:launch-1 && npm run android:launch-2"
   },
   "jest": {
     "preset": "jest-expo"

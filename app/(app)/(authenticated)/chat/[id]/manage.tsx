@@ -10,7 +10,7 @@ const Page = () => {
   const [users, setUsers] = useState<any[]>([]);
   useEffect(() => {
     const loadUsers = async () => {
-      const userQuery = await client.queryUsers({ role: 'user' });
+      const userQuery = await client.queryUsers({ role: 'student' });
       const channelUsers = await channel.queryMembers({});
 
       const userList = userQuery.users.map((user) => {

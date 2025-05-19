@@ -36,7 +36,7 @@ const Page = () => {
       }
 
       await createSupervision({
-        studentId: '', // biarkan kosong, backend akan ambil dari JWT
+        studentId: '',
         professorId,
         dateTime: date.toISOString(),
         status: SupervisionStatus.Pending,
