@@ -96,6 +96,19 @@ export const AuthProvider = ({ children }: any) => {
     loadToken();
   }, []);
 
+  useEffect(() => {
+    if (
+      authState &&
+      (authState.authenticated === null ||
+        authState.authenticated === false ||
+        !authState.token ||
+        !authState.jwt ||
+        !authState.user_id)
+    ) {
+      signOut();
+    }
+  }, [authState]);
+
   // Update state auth setelah dapet token dari login/registrasi
   const updateAuthStateFromToken = (object: any) => {
     setAuthState({

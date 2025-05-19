@@ -58,11 +58,6 @@ const Page = () => {
       )
     );
   };
-
-  // Tambahkan log di sini
-  const { authState } = useAuth();
-  console.log('JWT:', authState?.jwt);
-
   return (
     <View className="flex-1 bg-gray-50 px-4 pt-4">
       {!isProfessor && (
