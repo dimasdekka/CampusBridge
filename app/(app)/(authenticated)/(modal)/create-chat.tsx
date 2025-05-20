@@ -18,7 +18,11 @@ const Page = () => {
 
   useEffect(() => {
     const loadUsers = async () => {
-      const users = await client.queryUsers({ role: 'student' });
+      // Query untuk mengambil users dengan role student atau dosen
+      const users = await client.queryUsers({
+        $or: [{ role: 'student' }, { role: 'professor' }],
+        id: { $ne: client.user!.id }, // Exclude diri sendiri
+      });
       setUsers(users.users);
     };
     loadUsers();

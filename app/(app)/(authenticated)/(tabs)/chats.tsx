@@ -43,17 +43,11 @@ const Page = () => {
         options={{
           headerRight: () => (
             <>
-              {isProfessor && (
-                <Link href="/(app)/(authenticated)/(modal)/create-chat" asChild>
-                  <TouchableOpacity className="mr-4">
-                    <Ionicons
-                      name="add-circle-outline"
-                      size={24}
-                      color="black"
-                    />
-                  </TouchableOpacity>
-                </Link>
-              )}
+              <Link href="/(app)/(authenticated)/(modal)/create-chat" asChild>
+                <TouchableOpacity className="mr-4">
+                  <Ionicons name="add-circle-outline" size={24} color="black" />
+                </TouchableOpacity>
+              </Link>
             </>
           ),
         }}

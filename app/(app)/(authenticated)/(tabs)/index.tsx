@@ -150,14 +150,14 @@ const Page = () => {
                 </TouchableOpacity>
               </Link>
 
-              <Link href="/chats" asChild>
+              <Link href="/(app)/(authenticated)/(modal)/create-chat" asChild>
                 <TouchableOpacity className="flex-1 bg-purple-600 rounded-2xl p-4 items-start">
                   <MaterialIcons name="chat" size={32} color="white" />
                   <Text className="text-white text-lg font-bold mt-2">
-                    Join Chats
+                    Make a Group
                   </Text>
                   <Text className="text-white/80 text-sm mt-1">
-                    Connect with support groups
+                    Connect with groups of student
                   </Text>
                 </TouchableOpacity>
               </Link>
