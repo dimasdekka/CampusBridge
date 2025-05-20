@@ -36,13 +36,13 @@ export default function ChatProvider({ children }: PropsWithChildren) {
 
   // Koneksi ke Stream Chat saat user sudah terautentikasi
   useEffect(() => {
-    // Kalau user belum login, skip aja
-    if (!authState?.authenticated) {
-      return;
-    }
+    let isMounted = true;
 
-    // Fungsi untuk menghubungkan user ke Stream Chat pakai ID dan token mereka
     const connectUser = async () => {
+      if (!authState?.authenticated) {
+        setIsReady(false);
+        return;
+      }
       await client.connectUser(
         {
           id: authState.user_id!,
@@ -51,20 +51,19 @@ export default function ChatProvider({ children }: PropsWithChildren) {
         },
         authState.token!
       );
-      setIsReady(true);
+      if (isMounted) setIsReady(true);
     };
 
     connectUser();
 
-    // Cleanup: disconnect user kalau komponen unmount
-    // atau kalau state autentikasi berubah
+    // Cleanup: disconnect user kalau komponen unmount atau authState berubah
     return () => {
-      if (isReady) {
-        client.disconnectUser();
-      }
-      setIsReady(false);
+      isMounted = false;
+      client.disconnectUser().then(() => {
+        setIsReady(false);
+      });
     };
-  }, [authState?.authenticated]);
+  }, [authState]);
 
   // Tampilkan indikator loading saat masih konek ke Stream Chat
   if (!isReady) {

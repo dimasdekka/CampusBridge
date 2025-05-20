@@ -5,6 +5,7 @@
 import * as SecureStore from 'expo-secure-store';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { Platform } from 'react-native';
+import { StreamChat } from 'stream-chat';
 
 // Ini tipe data yang bakal di-share lewat context auth
 interface AuthProps {
@@ -166,6 +167,14 @@ export const AuthProvider = ({ children }: any) => {
 
   // Logout user dan reset auth state
   const signOut = async () => {
+    try {
+      const client = StreamChat.getInstance(
+        process.env.EXPO_PUBLIC_STREAM_ACCESS_KEY as string
+      );
+      if (client.user) {
+        await client.disconnectUser();
+      }
+    } catch (e) {}
     await storage.removeItem(TOKEN_KEY);
     setAuthState(EMPTY_AUTH_STATE);
   };
