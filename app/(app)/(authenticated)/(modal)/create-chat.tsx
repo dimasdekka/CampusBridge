@@ -18,10 +18,9 @@ const Page = () => {
 
   useEffect(() => {
     const loadUsers = async () => {
-      // Query untuk mengambil users dengan role student atau dosen
       const users = await client.queryUsers({
         $or: [{ role: 'student' }, { role: 'professor' }],
-        id: { $ne: client.user!.id }, // Exclude diri sendiri
+        id: { $ne: client.user!.id },
       });
       setUsers(users.users);
     };
@@ -29,12 +28,9 @@ const Page = () => {
   }, []);
 
   const handleCreateChannel = async () => {
-    if (!channelName.trim()) {
-      return;
-    }
+    if (!channelName.trim()) return;
 
     const randomId = Math.random().toString(36).substring(2, 15);
-
     const channel = client.channel('messaging', randomId, {
       name: channelName.trim(),
       description: channelDescription.trim(),
@@ -84,7 +80,9 @@ const Page = () => {
       <TouchableOpacity
         onPress={handleCreateChannel}
         className={`rounded-lg p-4 ${
-          channelName.trim() ? 'bg-blue-500' : 'bg-gray-300'
+          channelName.trim() && channelDescription.trim()
+            ? 'bg-blue-500'
+            : 'bg-gray-300'
         }`}
         disabled={!channelName.trim() || !channelDescription.trim()}
       >
@@ -102,16 +100,30 @@ const Page = () => {
       <Text className="text-gray-700 mb-4">Start a direct conversation</Text>
       <FlatList
         data={users}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() => handleDirectConversation(item.id)}
-            className="flex-row items-center p-4 border-b border-gray-200"
-          >
-            <Text className="text-gray-800 text-lg">{item.name}</Text>
-          </TouchableOpacity>
-        )}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => {
+          const isProfessor = item.role === 'professor';
+
+          return (
+            <TouchableOpacity
+              onPress={() => handleDirectConversation(item.id)}
+              className={`flex-row items-center p-4 mb-2 rounded-lg ${
+                isProfessor ? 'bg-purple-100' : 'bg-green-100'
+              }`}
+            >
+              <Text className="text-xl mr-3">{isProfessor ? '👩‍🏫' : '🧑‍🎓'}</Text>
+              <View className="flex-1">
+                <Text className="text-gray-900 font-semibold">{item.name}</Text>
+                <Text className="text-xs text-gray-600">
+                  {isProfessor ? 'Dosen' : 'Mahasiswa'}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          );
+        }}
       />
     </View>
   );
 };
+
 export default Page;
