@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, Text, View } from 'react-native';
+import { TouchableOpacity, Text, View, Dimensions } from 'react-native';
 import { Link } from 'expo-router';
 import { MaterialIcons } from '@expo/vector-icons';
 import type { Href } from 'expo-router';
@@ -33,8 +33,10 @@ const ActionCard: React.FC<ActionCardProps> = ({
           shadowOpacity: 0.1,
           shadowRadius: 4,
           elevation: 3,
-          width: 200,
+          width: '48%', // atau 48% manual
           height: 160,
+          marginHorizontal: 4,
+          position: 'relative',
         }}
       >
         {/* Circle dekorasi */}
@@ -84,30 +86,31 @@ const ActionCard: React.FC<ActionCardProps> = ({
 };
 
 const ActionCards: React.FC = () => {
-  const cards: ActionCardProps[] = [
-    {
-      href: '/consultation/schedule' as Href,
-      iconName: 'calendar-today',
-      title: 'Book Supervision',
-      description: 'Schedule session',
-      gradientStart: '#3B82F6',
-      gradientEnd: '#1E40AF',
-    },
-    {
-      href: '/(app)/(authenticated)/(modal)/create-chat' as Href,
-      iconName: 'chat',
-      title: 'Make a Group',
-      description: 'Student groups',
-      gradientStart: '#8B5CF6',
-      gradientEnd: '#6D28D9',
-    },
-  ];
-
   return (
-    <View className="flex-row gap-3">
-      {cards.map((card, index) => (
-        <ActionCard key={index} {...card} />
-      ))}
+    <View
+      style={{
+        flexDirection: 'row',
+        paddingHorizontal: 12,
+        marginVertical: 12,
+        justifyContent: 'space-between',
+      }}
+    >
+      <ActionCard
+        href={'/consultation/schedule' as Href}
+        iconName="calendar-today"
+        title="Book Supervision"
+        description="Schedule session"
+        gradientStart="#3B82F6"
+        gradientEnd="#1E40AF"
+      />
+      <ActionCard
+        href={'/(app)/(authenticated)/(modal)/create-chat' as Href}
+        iconName="chat"
+        title="Make a Group"
+        description="Student groups"
+        gradientStart="#8B5CF6"
+        gradientEnd="#6D28D9"
+      />
     </View>
   );
 };

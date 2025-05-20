@@ -1,4 +1,3 @@
-import { useAuth } from '@/providers/AuthProvider';
 import { Ionicons } from '@expo/vector-icons';
 import { Link, Stack, useRouter } from 'expo-router';
 import React from 'react';
@@ -10,7 +9,6 @@ import {
 } from 'stream-chat-expo';
 
 const Page = () => {
-  const { isProfessor } = useAuth();
   const router = useRouter();
   const { client } = useChatContext();
 
