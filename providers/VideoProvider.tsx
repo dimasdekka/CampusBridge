@@ -38,7 +38,7 @@ export default function VideoProvider({ children }: PropsWithChildren) {
         name: authState.email!,
       };
 
-      const client = new StreamVideoClient({
+      const client = StreamVideoClient.getOrCreateInstance({
         apiKey,
         token: authState.token!,
         user,
