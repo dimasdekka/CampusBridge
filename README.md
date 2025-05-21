@@ -1,8 +1,4 @@
-# React Native Mental Health App with Stream Chat & Video Call
-
-<a href="https://getstream.io/chat/sdk/react-native/?utm_source=youtube&utm_medium=referral&utm_content=&utm_campaign=simon" target="_blank">
-  <img src="./screenshots/ankurad_stream.png" alt="Stream Chat, Audio, Video & Feeds with AI Moderation" width="100%" />
-</a>
+# Campus Bridge - Platform Booking Skripsi dan Chat App Sebagai Jembatan Mahasiswa
 
 CampusBridge adalah aplikasi mobile berbasis React Native yang dirancang untuk mempermudah proses bimbingan skripsi antara mahasiswa dan dosen. Aplikasi ini dilengkapi dengan fitur chat real-time, video call konsultasi, penjadwalan bimbingan, dan pemantauan progres skripsi secara efisien.
 
@@ -58,7 +54,7 @@ Pastikan kamu sudah menginstal:
 
 ### App Setup
 
-untuk build aplikasi tolong ikuti step ini
+Untuk build aplikasi tolong ikuti step ini
 
 1. Clone the repository
 2. Run `npm install`
@@ -67,7 +63,9 @@ untuk build aplikasi tolong ikuti step ini
 
 ## Backend API Setup
 
-1. Clone repo backend: (https://github.com/dimasdekka/CampusBridgeAPI)
+Untuk lebih jelasnya baca dokumentasi disini [Backend API Documentation](https://github.com/dimasdekka/CampusBridgeAPI)
+
+1. Clone repo backend: https://github.com/dimasdekka/CampusBridgeAPI
 2. Tambahkan kredensial Stream dan konfigurasi lain di file .env
 3. Pastikan frontend (CampusBridge) menggunakan URL backend yang sesuai di .env
 4. Run `npm install`
@@ -75,6 +73,18 @@ untuk build aplikasi tolong ikuti step ini
 6. Run `npm run seed`
 7. Run `npm run build`
 8. Run `npm start`
+
+## Langkah Langka Pengujian
+
+Backend:
+
+1. Cek endpoint dengan Postman (register, login, create supervision, dsb).
+2. Pastikan response sesuai dan data masuk ke database.
+
+Frontend:
+
+1. Lakukan login/register, cek dashboard, buat jadwal bimbingan, join chat/video call.
+2. Pastikan semua fitur berjalan tanpa error.
 
 ## Demo
 
@@ -99,7 +109,6 @@ untuk build aplikasi tolong ikuti step ini
 <img src="./screenshots/5.png" width=30%>
 <img src="./screenshots/7.png" width=30%>
 <img src="./screenshots/8.png" width=30%>
-
 </div>
 
 ## Stream Screenshots
@@ -111,8 +120,9 @@ untuk build aplikasi tolong ikuti step ini
 <img src="./screenshots/stream4.png" width=45%>
 <img src="./screenshots/stream5.png" width=45%>
 <img src="./screenshots/stream7.png" width=30%>
-
 </div>
+
+## Testing
 
 ## 🚀 Lanjutan
 
