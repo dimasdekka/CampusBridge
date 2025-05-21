@@ -61,10 +61,6 @@ const Page = () => {
   return (
     <ScrollView className="flex-1 bg-white p-4">
       <View className="gap-6">
-        <Text className="text-2xl font-bold text-gray-800">
-          Schedule Consultation
-        </Text>
-
         <View className="gap-2">
           <Text className="text-gray-600 font-medium">Professor ID</Text>
           <TextInput
