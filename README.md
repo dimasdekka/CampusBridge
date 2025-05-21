@@ -66,7 +66,7 @@ Untuk build aplikasi tolong ikuti step ini
 Untuk lebih jelasnya baca dokumentasi disini [Backend API Documentation](https://github.com/dimasdekka/CampusBridgeAPI)
 
 1. Clone repo backend: https://github.com/dimasdekka/CampusBridgeAPI
-2. Tambahkan kredensial Stream dan konfigurasi lain di file .env
+2. Ubah .dummyenv menjadi .env dan isi data sesuai api baru kalian
 3. Pastikan frontend (CampusBridge) menggunakan URL backend yang sesuai di .env
 4. Run `npm install`
 5. Run `npx prisma migrate deploy`
