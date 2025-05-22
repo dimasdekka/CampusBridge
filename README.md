@@ -89,26 +89,31 @@ Frontend:
 ## Demo
 
 <div style="display: flex; flex-direction: 'row';">
-<img src="./screenshots/1.gif" width=30%>
-<img src="./screenshots/2.gif" width=30%>
-<img src="./screenshots/3.gif" width=30%>
-<img src="./screenshots/4.gif" width=30%>
-<img src="./screenshots/5.gif" width=30%>
-<img src="./screenshots/6.gif" width=30%>
-<img src="./screenshots/7.gif" width=30%>
+<img src="./screenshots/1.png" width=30%>
+<img src="./screenshots/2.png" width=30%>
+<img src="./screenshots/3.png" width=30%>
+<img src="./screenshots/4.png" width=30%>
+<img src="./screenshots/5.png" width=30%>
+<img src="./screenshots/6.png" width=30%>
+<img src="./screenshots/7.png" width=30%>
+<img src="./screenshots/8.png" width=30%>
+<img src="./screenshots/9.png" width=30%>
+<img src="./screenshots/10.png" width=30%>
+<img src="./screenshots/11.png" width=30%>
+<img src="./screenshots/12.png" width=30%>
 
 </div>
 
 ## App Screenshots
 
 <div style="display: flex; flex-direction: 'row';">
-<img src="./screenshots/1.png" width=30%>
-<img src="./screenshots/2.png" width=30%>
-<img src="./screenshots/3.png" width=30%>
-<img src="./screenshots/4.png" width=30%>
-<img src="./screenshots/5.png" width=30%>
-<img src="./screenshots/7.png" width=30%>
-<img src="./screenshots/8.png" width=30%>
+<img src="./screenshots/1.1.png" width=30%>
+<img src="./screenshots/2.1.png" width=30%>
+<img src="./screenshots/3.1.png" width=30%>
+<img src="./screenshots/4.1.png" width=30%>
+<img src="./screenshots/5.1.png" width=30%>
+<img src="./screenshots/7.1.png" width=30%>
+<img src="./screenshots/8.1.png" width=30%>
 </div>
 
 ## Stream Screenshots
