@@ -101,19 +101,9 @@ Frontend:
 <img src="./screenshots/10.png" width=30%>
 <img src="./screenshots/11.png" width=30%>
 <img src="./screenshots/12.png" width=30%>
+<img src="./screenshots/13.png" width=30%>
+<img src="./screenshots/14.png" width=30%>
 
-</div>
-
-## App Screenshots
-
-<div style="display: flex; flex-direction: 'row';">
-<img src="./screenshots/1.1.png" width=30%>
-<img src="./screenshots/2.1.png" width=30%>
-<img src="./screenshots/3.1.png" width=30%>
-<img src="./screenshots/4.1.png" width=30%>
-<img src="./screenshots/5.1.png" width=30%>
-<img src="./screenshots/7.1.png" width=30%>
-<img src="./screenshots/8.1.png" width=30%>
 </div>
 
 ## Stream Screenshots
@@ -123,11 +113,18 @@ Frontend:
 <img src="./screenshots/stream2.png" width=45%>
 <img src="./screenshots/stream3.png" width=45%>
 <img src="./screenshots/stream4.png" width=45%>
-<img src="./screenshots/stream5.png" width=45%>
-<img src="./screenshots/stream7.png" width=30%>
 </div>
 
 ## Testing
+
+<div style="display: flex; flex-direction: 'row';">
+login testing
+<img src="./screenshots/testing1.png" width=45%>
+register testing
+<img src="./screenshots/testing2.png" width=45%>
+create professor testing
+<img src="./screenshots/testing3.png" width=45%>
+</div>
 
 ## 🚀 Lanjutan
 
