@@ -118,11 +118,8 @@ Frontend:
 ## Testing
 
 <div style="display: flex; flex-direction: 'row';">
-login testing
 <img src="./screenshots/testing1.png" width=45%>
-register testing
 <img src="./screenshots/testing2.png" width=45%>
-create professor testing
 <img src="./screenshots/testing3.png" width=45%>
 </div>
 
