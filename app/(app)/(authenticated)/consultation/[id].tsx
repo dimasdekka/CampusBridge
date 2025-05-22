@@ -6,7 +6,7 @@ import {
   CallContent,
 } from '@stream-io/video-react-native-sdk';
 import { useEffect, useState } from 'react';
-import { useLocalSearchParams, useNavigation } from 'expo-router';
+import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router';
 import { View, Text } from 'react-native';
 import { CustomCallControls } from '@/components/CustomCallControls';
 import { useAuth } from '@/providers/AuthProvider';
@@ -18,6 +18,7 @@ const Page = () => {
   const { id } = useLocalSearchParams();
   const [call, setCall] = useState<Call | null>(null);
   const navigation = useNavigation();
+  const router = useRouter();
   const client = useStreamVideoClient();
   const { isProfessor } = useAuth();
 
@@ -29,33 +30,29 @@ const Page = () => {
   }, []);
 
   useEffect(() => {
-    const setupCall = async () => {
-      const _call = client?.call('default', id as string);
-      if (!_call) return;
+    const _call = client?.call('default', id as string);
+    if (!_call) return;
+    setCall(_call);
 
-      await _call.join({ create: true });
-      setCall(_call);
-
-      // Hanya profesor yang mulai recording dan transcription
+    _call.join({ create: true }).then(async () => {
       if (isProfessor) {
-        const unsubscribe = _call.on('call.updated', async () => {
-          if (_call.state.callingState === CallingState.JOINED) {
-            try {
-              await _call.startRecording();
-              await _call.startTranscription();
-              console.log('Recording & transcription started');
-            } catch (err) {
-              console.warn('Failed to start recording or transcription', err);
-            }
-          }
-        });
-
-        return () => unsubscribe?.();
+        try {
+          await _call.startRecording();
+          await _call.startTranscription();
+        } catch (err) {
+          console.error('Failed to start recording/transcription:', err);
+        }
       }
-    };
-
-    setupCall();
+    });
   }, [client, id]);
+
+  useEffect(() => {
+    if (!call || !isProfessor) return;
+    if (call.state.callingState === CallingState.JOINED) {
+      call.startRecording();
+      call.startTranscription();
+    }
+  }, [call, call?.state.callingState, isProfessor]);
 
   useEffect(() => {
     return () => {
@@ -81,11 +78,10 @@ const Page = () => {
         <CallContent
           layout="spotlight"
           onHangupCallHandler={() => {
-            if (isProfessor) {
-              call?.stopRecording();
-              call?.stopTranscription();
-            }
+            call?.stopRecording();
+            call?.stopTranscription();
             call?.leave();
+            router.back();
           }}
           CallControls={CustomCallControls}
         />
@@ -93,5 +89,4 @@ const Page = () => {
     </StreamCall>
   );
 };
-
 export default Page;

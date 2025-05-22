@@ -41,7 +41,7 @@ const Page = () => {
   if (!isProfessor) {
     return (
       <View>
-        <Text>You are not a professor</Text>
+        <Text>You are not a therapist</Text>
       </View>
     );
   }
@@ -51,24 +51,26 @@ const Page = () => {
   }, []);
 
   const loadAppointmenets = async () => {
-    const supervision = await getSupervisions();
-    setSupervisionInfo(supervision);
+    const appointments = await getSupervisions();
+    setAppointmentInfo(appointments);
   };
 
-  const setSupervisionInfo = async (supervision: SupervisionInfo[]) => {
+  const setAppointmentInfo = async (appointments: SupervisionInfo[]) => {
     await Promise.all(
-      supervision.map(async (sv) => {
+      appointments.map(async (appointment) => {
         try {
-          const _call = client?.call('default', sv.id as string);
+          const _call = client?.call('default', appointment.id as string);
           if (!_call) return {};
           const recordingsQuery = await _call?.queryRecordings();
           const transcriptionQuery = await _call?.queryTranscriptions();
-          sv.recordings = recordingsQuery?.recordings;
-          sv.transcriptions = transcriptionQuery?.transcriptions;
+          console.log('recordingsQuery', recordingsQuery);
+          console.log('transcriptionQuery', transcriptionQuery);
+          appointment.recordings = recordingsQuery?.recordings;
+          appointment.transcriptions = transcriptionQuery?.transcriptions;
         } catch (error) {
           console.error('Error fetching recordings:', error);
-          sv.recordings = [];
-          sv.transcriptions = [];
+          appointment.recordings = [];
+          appointment.transcriptions = [];
         }
       })
     );
@@ -83,7 +85,7 @@ const Page = () => {
 
   const showTranscription = async (
     url: string,
-    supervision: SupervisionInfo
+    appointment: SupervisionInfo
   ) => {
     try {
       const response = await fetch(url);
@@ -95,7 +97,7 @@ const Page = () => {
         .split('\n')
         .map((line) => JSON.parse(line));
       setTranscriptData(entries);
-      setCurrentAppointment(supervision);
+      setCurrentAppointment(appointment);
       setTranscriptVisible(true);
     } catch (error) {
       console.error('Error fetching transcript:', error);
@@ -178,7 +180,7 @@ const Page = () => {
                   </Text>
                   <Text className="text-gray-700">{entry.text}</Text>
                   <Text className="text-gray-400 text-xs mt-1">
-                    {new Date(entry.start_ts).toISOString().substring(11, 8)}
+                    {new Date(entry.start_ts).toISOString().substr(11, 8)}
                   </Text>
                 </View>
               ))}
@@ -191,19 +193,21 @@ const Page = () => {
         className="flex-1 bg-gray-50"
         data={appointments}
         contentContainerClassName="p-4"
-        renderItem={({ item: sv }) => (
+        renderItem={({ item: appointment }) => (
           <View className="bg-white rounded-lg shadow-sm mb-4 p-4">
             <View className="border-b border-gray-200 pb-2 mb-3">
-              <Text className="text-lg font-semibold">{sv.studentEmail}</Text>
+              <Text className="text-lg font-semibold">
+                {appointment.studentEmail}
+              </Text>
               <Text className="text-gray-600">
-                {new Date(sv.dateTime).toLocaleString()}
+                {new Date(appointment.dateTime).toLocaleString()}
               </Text>
             </View>
 
-            {sv.recordings && sv.recordings.length > 0 ? (
+            {appointment.recordings && appointment.recordings.length > 0 ? (
               <View className="mb-3">
                 <Text className="font-medium mb-2">Recordings</Text>
-                {sv.recordings.map((recording: any, index: number) => (
+                {appointment.recordings.map((recording: any, index: number) => (
                   <TouchableOpacity
                     key={index}
                     className="bg-gray-50 py-2 rounded mb-2"
@@ -221,20 +225,25 @@ const Page = () => {
               </Text>
             )}
 
-            {sv.transcriptions && sv.transcriptions.length > 0 ? (
+            {appointment.transcriptions &&
+            appointment.transcriptions.length > 0 ? (
               <View>
                 <Text className="font-medium mb-2">Transcriptions</Text>
-                {sv.transcriptions.map((transcription: any, index: number) => (
-                  <TouchableOpacity
-                    key={index}
-                    className="bg-gray-50 p-2 rounded mb-2"
-                    onPress={() => showTranscription(transcription.url, sv)}
-                  >
-                    <Text className="text-blue-600 text-sm">
-                      {transcription.filename}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
+                {appointment.transcriptions.map(
+                  (transcription: any, index: number) => (
+                    <TouchableOpacity
+                      key={index}
+                      className="bg-gray-50 p-2 rounded mb-2"
+                      onPress={() =>
+                        showTranscription(transcription.url, appointment)
+                      }
+                    >
+                      <Text className="text-blue-600 text-sm">
+                        {transcription.filename}
+                      </Text>
+                    </TouchableOpacity>
+                  )
+                )}
               </View>
             ) : (
               <Text className="text-gray-500">No transcriptions available</Text>
