@@ -10,9 +10,11 @@ import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router';
 import { View, Text } from 'react-native';
 import { CustomCallControls } from '@/components/CustomCallControls';
 import { useAuth } from '@/providers/AuthProvider';
-import { PermissionsAndroid } from 'react-native';
+import { PermissionsAndroid, Platform } from 'react-native';
 
-PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
+if (Platform.OS === 'android') {
+  PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
+}
 
 const Page = () => {
   const { id } = useLocalSearchParams();
