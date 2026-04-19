@@ -31,6 +31,7 @@ const TOKEN_KEY = 'user-jwt';
 export const API_URL = Platform.select({
   ios: process.env.EXPO_PUBLIC_API_URL,
   android: 'http://10.0.2.2:3000',
+  web: process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3000',
 });
 
 // Bikin context buat nyimpen data auth secara global

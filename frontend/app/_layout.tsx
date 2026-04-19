@@ -28,24 +28,56 @@ const InitialLayout = () => {
   return <Slot />;
 };
 
+const WebPhoneWrapper = ({ children }: { children: React.ReactNode }) => {
+  if (Platform.OS !== 'web') return <>{children}</>;
+
+  return (
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: '#e5e7eb', // gray-200
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <View
+        style={{
+          width: 390,
+          height: 844,
+          backgroundColor: 'black',
+          borderRadius: 40,
+          padding: 8,
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+        }}
+      >
+        <View style={{ flex: 1, backgroundColor: 'white', borderRadius: 32, overflow: 'hidden' }}>
+          {children}
+        </View>
+      </View>
+    </View>
+  );
+};
+
 const RootLayout = () => {
   const colorScheme = useColorScheme();
 
   return (
-    <SupervisionProvider>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <OverlayProvider>
-          <ThemeProvider
-            value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
-          >
-            <AuthProvider>
-              <StatusBar style="auto" />
-              <InitialLayout />
-            </AuthProvider>
-          </ThemeProvider>
-        </OverlayProvider>
-      </GestureHandlerRootView>
-    </SupervisionProvider>
+    <WebPhoneWrapper>
+      <SupervisionProvider>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <OverlayProvider>
+            <ThemeProvider
+              value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+            >
+              <AuthProvider>
+                <StatusBar style="auto" />
+                <InitialLayout />
+              </AuthProvider>
+            </ThemeProvider>
+          </OverlayProvider>
+        </GestureHandlerRootView>
+      </SupervisionProvider>
+    </WebPhoneWrapper>
   );
 };
 
