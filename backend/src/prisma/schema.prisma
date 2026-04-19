@@ -1,0 +1,27 @@
+enum UserRole {
+  student
+  professor
+}
+
+model User {
+  id              String   @id
+  email           String   @unique
+  hashed_password String
+  role            UserRole
+  name            String?
+  department      String?
+
+  studentSupervisions   Supervision[] @relation("StudentSupervisions")
+  professorSupervisions Supervision[] @relation("ProfessorSupervisions")
+}
+
+model Supervision {
+  id          String   @id @default(uuid())
+  studentId   String
+  professorId String
+  dateTime    DateTime
+  status      String
+  notes       String?
+  student     User     @relation("StudentSupervisions", fields: [studentId], references: [id], onUpdate: NoAction, onDelete: NoAction)
+  professor   User     @relation("ProfessorSupervisions", fields: [professorId], references: [id], onUpdate: NoAction, onDelete: NoAction)
+}
